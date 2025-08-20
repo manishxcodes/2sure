@@ -1,0 +1,11 @@
+node_modules
+.env
+
+passport passport-local
+cors
+bcryptjs
+jsonwebtoken
+mongoose
+speakeasy
+qrcode 
+express-session
