@@ -3,6 +3,7 @@ import session from 'express-session';
 import dotnev from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
+import { connectToDB } from './config/db.ts';
 
 dotnev.config();
 
@@ -35,6 +36,18 @@ app.use(passport.session());
 // listen app
 const PORT = process.env.PORT || 7002;
 
-app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+connectToDB()
+.then(() => {
+    app.on("error", (error) => {
+        console.log("\nError while listening: \n", { details: error });
+    });
+
+    app.listen(PORT, () => {
+        console.log(`\nlistening on port ${PORT}`);
+    })
 })
+.catch((error) => {
+    console.log("\nMongo DB connection failed \n", {details: error},);
+})
+
+
