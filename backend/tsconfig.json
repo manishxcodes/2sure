@@ -41,6 +41,12 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
 
+    // for ts imports
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "moduleResolution": "nodenext",
+    "forceConsistentCasingInFileNames": true
+
     
   },
   "include": ["src/**/*"],
