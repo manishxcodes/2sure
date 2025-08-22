@@ -13,7 +13,7 @@ router.get("/test", async (req, res) => {
 router.post("/register", register);
  
 // login route
-router.post("/login", login);
+router.post("/login", passport.authenticate("local"), login);
  
 // auth-status route
 router.get("/status", authStatus);
