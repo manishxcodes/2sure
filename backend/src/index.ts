@@ -4,6 +4,7 @@ import dotnev from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
 import { connectToDB } from './config/db.ts';
+import authRoutes from './routes/auth.route.ts'
 
 dotnev.config();
 
@@ -32,6 +33,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // routes
+app.use("/api/auth", authRoutes)
+
+
 
 // listen app
 const PORT = process.env.PORT || 7002;
