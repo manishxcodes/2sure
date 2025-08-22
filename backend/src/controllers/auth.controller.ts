@@ -29,7 +29,17 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     try {
-        // TODO: implement login logic
+        if(!req.user) return res.status(401).json({ error: "Not authenticated"});
+
+        console.log("Authenticated user: ", {
+            username: req.user.username,
+            isMfaActive: req.user.isMfaActive,
+        });
+        return res.status(200).json({
+            message: "User logged in successfully", 
+            username: req.user.username,
+            isMfaActive: req.user.isMfaActive,
+        });
     } catch (error) {
         console.log("Error in login\n", {message: error});
         return res.status(500).json({
@@ -41,15 +51,33 @@ export const login = async (req: Request, res: Response) => {
 
 export const authStatus = async (req: Request, res: Response) => {
     try {
-        // TODO: implement auth status logic
+        if(req.user) {
+            return res.status(200).json({
+                message: "User logged in successfully", 
+                username: req.user.username,
+                isMfaActive: req.user.isMfaActive,
+            });
+        } else {
+            return res.status(401).json({
+                message: "Unauhtorize user"
+            })
+        }
     } catch (error) {
         console.log("Error in authStatus\n", {message: error});
+        return res.status(500).json({
+            error: "Error while getting auth status",
+            message: error
+        })        
     }
 };
 
 export const logout = async (req: Request, res: Response) => {
     try {
-        // TODO: implement logout logic
+        if(!req.user) return res.status(401).json({ message: "Unauthorized user"});
+        req.logout((error) => {
+            if(error) return res.status(400).json({ message: "User no t logged in" })
+            return res.status(200).json({ message: "Logout successful"});
+        });
     } catch (error) {
         console.log("Error in logout\n", {message: error});
     }
