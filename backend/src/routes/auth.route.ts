@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { register, login, authStatus, logout, setup2FA, verify2FA, reset2FA } from '../controllers/auth.controller.ts';
+import { isAuthenticated } from '../middlewares/auth.middleware.ts';
 
 const router = Router();
 
@@ -22,12 +23,12 @@ router.get("/status", authStatus);
 router.post("/logout", logout);
  
 // 2fa setup
-router.post("/2fa/setup", setup2FA);
+router.post("/2fa/setup", isAuthenticated, setup2FA);
 
 // verify route
-router.post("/2fa/verify", verify2FA);
+router.post("/2fa/verify", isAuthenticated, verify2FA);
 
 // reset route
-router.post("/2fa/reset", reset2FA);
+router.post("/2fa/reset", isAuthenticated, reset2FA);
  
 export default router;
