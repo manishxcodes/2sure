@@ -1,5 +1,8 @@
 import type { Request, Response } from "express";
 import { User } from "../models/user.model.ts";
+import speakeasy from 'speakeasy';
+import qrCode from 'qrcode';
+import jwt from 'jsonwebtoken'
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -80,20 +83,47 @@ export const logout = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.log("Error in logout\n", {message: error});
+        return res.status(500).json({
+            error: "Error while logging out",
+            message: error
+        }) 
     }
 };
 
 export const setup2FA = async (req: Request, res: Response) => {
     try {
-        // TODO: implement 2FA setup logic
+        const user = req.user;
+        if(user) {
+            var secret = speakeasy.generateSecret();
+            user.twoFactorSecret = secret.base32;
+            user.isMfaActive = true;
+            await user.save();
+
+            const url = speakeasy.otpauthURL({
+                secret: secret.base32,
+                label: `${req.user?.username}`,
+                issuer: "2sure",
+                encoding: "base32"
+            });
+
+            const qrImageUrl = await qrCode.toDataURL(url);
+            return res.status(200).json({
+                //secret: secret.base32,
+                qrCode: qrImageUrl
+            })
+        }
     } catch (error) {
         console.log("Error in setup2FA\n", {message: error});
+        return res.status(500).json({
+            error: "Error setting up 2FA",
+            message: error
+        }) 
     }
-    };
+};
 
 export const verify2FA = async (req: Request, res: Response) => {
     try {
-        // TODO: implement 2FA verification logic
+        const { token } = req.body;
     } catch (error) {
         console.log("Error in verify2FA\n", {message: error});
     }
