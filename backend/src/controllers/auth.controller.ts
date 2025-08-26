@@ -130,9 +130,6 @@ export const verify2FA = async (req: Request, res: Response) => {
 
         if(!user) return res.status(400).json({ message: "User doesnot have 2FA setup" });
 
-        console.log("user: ", user);
-        const secret = user.twoFactorSecret;
-        console.log("secret: ", secret);
         const isVerified = speakeasy.totp.verify({
             secret: user.twoFactorSecret,
             encoding: "base32",
