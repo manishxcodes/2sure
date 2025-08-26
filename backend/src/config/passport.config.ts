@@ -28,7 +28,7 @@ passport.deserializeUser(async (_id, done) => {
     try {
         console.log('inside deserializer');
 
-        const user = await User.findById(_id).select('-password');
+        const user = await User.findById(_id).select('-password +twoFactorSecret');
         if(user) done(null, user);
         else done(null, false);         // user not found
     } catch(error) {    
