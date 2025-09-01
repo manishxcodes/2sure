@@ -13,7 +13,7 @@ const app = express();
 
 // middleware
 const corsOptions = {
-    origin: ["http://localhost:3001"],
+    origin: ["http://localhost:5173"],
     credentials: true               // to supports cookies/ sessions/ headers
 }
 app.use(cors(corsOptions));
