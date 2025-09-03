@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { loginSchema } from "@/schema";
+import { loginSchema, type loginResponse } from "@/schema";
 import { loginUser } from "@/service/auth-api";
 import axios from "axios";
 import { Loader } from "lucide-react";
@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-export function LoginForm() {
+export function LoginForm({onLoginSuccess} : {onLoginSuccess: (userData: loginResponse) => void | {}}) {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
@@ -43,6 +43,7 @@ export function LoginForm() {
             if(data) {
                 toast.success(data.message);
                 console.log(data);
+                onLoginSuccess(data);
             }
 
         } catch (err) {
@@ -58,7 +59,6 @@ export function LoginForm() {
             setLoading(false);
         }
     }
-
 
   return (
     <Card className="w-full max-w-sm">
