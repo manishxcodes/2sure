@@ -1,10 +1,17 @@
+import { RouterProvider } from "react-router-dom"
+import router from "./routes"
+import { SessionProvider } from "./context/session-context"
 
 function App() {
 
 	return (
-		<div className="h-[100vh] w-full flex justify-center items-center">
-			Hello there
-		</div >
+		<div className="">
+			<div>
+				<SessionProvider>
+					<RouterProvider router={router} />
+				</SessionProvider>
+			</div>
+		</div>
 	)
 }
 
