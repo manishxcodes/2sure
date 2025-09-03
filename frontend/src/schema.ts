@@ -11,3 +11,9 @@ export const registerSchema = loginSchema.extend({
     message: "Password dont match",
     path: ["confirmPassword"]
 })
+
+export type loginResponse = {
+    message: string,
+    username: string, 
+    isMfaActive: boolean
+}
