@@ -1,3 +1,4 @@
+import type { loginResponse } from "@/schema"
 import api from "./api"
 
 export const registerUser = async (username: string, password: string) => {
@@ -8,7 +9,7 @@ export const registerUser = async (username: string, password: string) => {
 }
 
 export const loginUser = async (username: string, password: string) => {
-    return await api.post("/auth/login", {
+    return await api.post<loginResponse>("/auth/login", {
         username, 
         password
     }, {
