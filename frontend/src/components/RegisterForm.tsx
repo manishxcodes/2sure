@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { registerSchema } from "@/schema"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { Loader } from "lucide-react"
 import { registerUser } from "@/service/auth-api"
@@ -23,6 +23,8 @@ export function RegisterForm() {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,12 +41,15 @@ export function RegisterForm() {
                 return;
             }  
             
-            console.log("details: ", {username, password});
             // make api call to register
             const { data }= await registerUser(username, password);
             if(data) {
-                console.log(data);
+                // console.log(data);
                 toast.success(data.message);
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
             }
 
         } catch (err) {
