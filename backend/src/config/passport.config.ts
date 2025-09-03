@@ -20,13 +20,13 @@ passport.use(
 ));
 
 passport.serializeUser((user, done) => {
-    console.log("inside serializer");
+    // console.log("inside serializer");
     done(null, user._id);
 });
 
 passport.deserializeUser(async (_id, done) => {
     try {
-        console.log('inside deserializer');
+        // console.log('inside deserializer');
 
         const user = await User.findById(_id).select('-password +twoFactorSecret');
         if(user) done(null, user);
