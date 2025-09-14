@@ -12,7 +12,7 @@ export const registerSchema = loginSchema.extend({
     path: ["confirmPassword"]
 })
 
-export type loginResponse = {
+export type loginResponseType = {
     message: string,
     username: string, 
     isMfaActive: boolean

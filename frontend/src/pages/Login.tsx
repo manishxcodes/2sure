@@ -2,22 +2,22 @@ import React from "react";
 import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "@/context/session-context";
-import type { loginResponse } from "@/schema";
+import type { loginResponseType } from "@/schema";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
     const { login } = useSession();
 
-    const handleLoginSuccess = (userData: loginResponse) => {
+    const handleLoginSuccess = (userData: loginResponseType) => {
     	console.log("userData: ", userData);
-		login(userData);
+      login(userData);
 
-		// check if mfa active
-		if(!userData.isMfaActive) {
-			navigate("/setup-2fa")
-		} else {
-			navigate("/verify");
-		}
+      // check if mfa active
+      if(!userData.isMfaActive) {
+        navigate("/setup-2fa")
+      } else {
+        navigate("/verify");
+      }
     }
 
     return (
