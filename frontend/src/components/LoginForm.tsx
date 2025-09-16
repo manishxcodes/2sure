@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { loginSchema, type loginResponseType } from "@/schema";
+import { loginSchema } from "@/schema";
+import { type loginResponseType } from "@/types";
 import { loginUser } from "@/service/auth-api";
 import axios from "axios";
 import { Loader } from "lucide-react";
