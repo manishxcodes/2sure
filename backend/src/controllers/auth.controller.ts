@@ -78,7 +78,22 @@ export const logout = async (req: Request, res: Response) => {
     try {
         if(!req.user) return res.status(401).json({ message: "Unauthorized user"});
         req.logout((error) => {
-            if(error) return res.status(400).json({ message: "User no t logged in" })
+            if(error) {
+                console.log("Logout error", {details: error})
+                return res.status(400).json({ message: "User not logged in" })
+            } 
+
+            // destroy session
+            req.session.destroy((error) => {
+                if(error) {
+                    console.log("Error while destroying session,", {detais: error});
+                    return res.status(500).json({ message: "Error destroying session" }); 
+                }
+            })
+
+            // clear cookie
+            res.clearCookie("connect.sid");
+
             return res.status(200).json({ message: "Logout successful"});
         });
     } catch (error) {
