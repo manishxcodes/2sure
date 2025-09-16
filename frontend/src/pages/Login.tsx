@@ -2,7 +2,7 @@ import React from "react";
 import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "@/context/session-context";
-import type { loginResponseType } from "@/schema";
+import type { loginResponseType } from "@/types";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
