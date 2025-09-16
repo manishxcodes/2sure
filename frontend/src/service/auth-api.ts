@@ -1,5 +1,6 @@
-import type { loginResponse } from "@/schema"
+import type { loginResponseType } from "@/types"
 import api from "./api"
+import type { reset2FAResponseType, verify2FAResponseType } from "@/types"
 
 export const registerUser = async (username: string, password: string) => {
     return await api.post("/auth/register", {
@@ -9,7 +10,7 @@ export const registerUser = async (username: string, password: string) => {
 }
 
 export const loginUser = async (username: string, password: string) => {
-    return await api.post<loginResponse>("/auth/login", {
+    return await api.post<loginResponseType>("/auth/login", {
         username, 
         password
     }, {
@@ -36,7 +37,7 @@ export const setup2FA = async () => {
 }
 
 export const verify2FA = async (token: string) => {
-    return await api.post("/auth/2fa/verify", {
+    return await api.post<verify2FAResponseType>("/auth/2fa/verify", {
         token: token
     }, {
         withCredentials: true
@@ -44,7 +45,7 @@ export const verify2FA = async (token: string) => {
 }
 
 export const reset2FA = async () => {
-    return await api.post("/auth/2fa/reset", {}, {
+    return await api.post<reset2FAResponseType>("/auth/2fa/reset", {}, {
         withCredentials: true
     })
 }
