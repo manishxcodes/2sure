@@ -12,8 +12,6 @@ export const registerSchema = loginSchema.extend({
     path: ["confirmPassword"]
 })
 
-export type loginResponseType = {
-    message: string,
-    username: string, 
-    isMfaActive: boolean
-}
+export const otpSchema = z.object({
+    otp: z.string().length(6, "OTP must be exactly 6 digits")
+})
